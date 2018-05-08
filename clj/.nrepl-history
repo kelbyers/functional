@@ -1,0 +1,2 @@
+(fire "-t" "NBA Jam guy")
+(fire :thing "NBA Jam guy")
