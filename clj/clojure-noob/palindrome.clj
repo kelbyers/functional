@@ -25,8 +25,8 @@
   [a b]
   (let [p (* a b)]
     (if (palindome-number? p)
-      #{p}
-      #{})))
+      [p]
+      [])))
 
 (palindome-number? 99)
 (palindome-number? 9019)
@@ -37,7 +37,7 @@
   (loop [b min-b
          pals #{}]
     (if (> b max-b)
-      pals
+      (vec pals)
       (recur (inc b) (union pals (pal-prod a b))))))
 
 (pal-prod-rng-b 91 99 99)
@@ -49,7 +49,7 @@
   (loop [a min-a
          pals #{}]
     (if (> a max-a)
-      (set (sort pals))
+      (vec (sort pals))
       (recur (inc a) (into pals (pal-prod-rng-b a min-b max-b))))))
 
 (pal-prod-rng 11 11 10 99)
@@ -58,6 +58,6 @@
 
 (pal-prod-rng 10 99 10 99)
 
-(apply sorted-set (pal-prod-rng 10 99 10 99))
+(apply max (pal-prod-rng 10 99 10 99))
 
-(apply max (pal-prod-rng 11 11 10 99))
+(apply max (pal-prod-rng 100 999 100 999))
