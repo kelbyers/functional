@@ -25,7 +25,7 @@
        candidate
        (recur (inc candidate))))))
 
-(next-prime [])
+(next-prime)
 (next-prime '(2 3))
 
 (defn prime-seq
