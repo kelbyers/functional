@@ -57,3 +57,25 @@
   (println "P:" prime "R:" remaining)
   (if (not (empty? remaining))
     (recur remaining)))
+
+(defn infinite-sieve-fn [[testset int]]
+  (let [pair (first testset)
+        [multiple prime] pair]
+    (cond
+      ; (= int multiple) (list testset (inc int))
+      (= int multiple) (list testset (+ 2 int))
+      (> int multiple) (list (conj (disj testset pair) [(+ multiple prime) prime]) int)
+      (< int multiple) (list (conj testset [int int]) int))))
+
+(def sieves (iterate infinite-sieve-fn [(sorted-set [2 2]) 3]))
+(infinite-sieve-fn [(sorted-set [2,2]) 3])
+
+(take 5 sieves)
+
+(nth sieves 20)
+(sort (map second (first (nth sieves 200))))
+
+(def sieveprimes (map (fn[x] (sort (map second (first x)))) sieves))
+
+(nth sieveprimes 1000)
+(take 10 (reverse (nth sieveprimes 10000)))
