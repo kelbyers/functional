@@ -79,3 +79,38 @@
 
 (nth sieveprimes 1000)
 (take 10 (reverse (nth sieveprimes 10000)))
+
+(defn infinite-sieve
+  ([n] (sort (map second (infinite-sieve (sorted-set [4,2]) 3 n))))
+  ([testset int stop]
+   (if (> int stop)
+     testset
+     (let [pair (first testset)
+           [multiple prime] pair]
+       (cond
+         (= int multiple) (recur testset (+ 2 int) stop)
+         (> int multiple) (recur (conj (disj testset pair) [(+ multiple prime) prime]) int stop)
+         (< int multiple) (recur (conj testset [(* int int) int]) (+ 2 int) stop))))))
+
+(count (infinite-sieve 100))
+
+(defn is-prime?
+  [num primes]
+  (not (some zero? (map (partial mod num) primes))))
+
+(defn next-prime
+  ([] 2)
+  ([primes]
+   (loop [candidate (inc (peek primes))]
+     (if (is-prime? candidate primes)
+       candidate
+       (recur (inc candidate))))))
+
+(defn prime-seq
+  ([] (prime-seq [] (next-prime)))
+  ([primes next]
+   (let [next-primes (conj primes next)]
+     (lazy-seq
+       (cons next (prime-seq next-primes (next-prime next-primes)))))))
+
+(= (infinite-sieve 100) (take 25 (prime-seq)))
