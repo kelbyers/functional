@@ -16,3 +16,14 @@ records
   {:name "Ed", :glitter-index 10})
 
 (let [keyword :name] (keyword {:name "Edward Cullen", :glitter-index 10}))
+
+(clojure.string/join
+  "\n"
+  (map #(clojure.string/join "," '((:name % (:glitter-index %))))))
+
+(clojure.string/join "," '("Ed" 0))
+
+(clojure.string/join
+  "\n"
+  (map #(list (:name %) (:glitter-index %)) '({:name "Ed" :glitter-index 0}
+                                              {:name "Lou" :glitter-index 2})))
