@@ -20,6 +20,10 @@
   (map #(clojure.string/split % #",")
        (clojure.string/split string #"\n")))
 
+; (defn records-to-csv
+;   [records])
+
+
 (defn mapify
   "Return a seq of maps like {:name \"Edward Cullen\" :glitter-index 10}"
   [rows]
@@ -33,3 +37,20 @@
 (defn glitter-filter
   [minimum-glitter records]
   (filter #(>= (:glitter-index %) minimum-glitter) records))
+
+(defn glitter-filter-names
+  [minimum-glitter records]
+  (map :name (glitter-filter minimum-glitter records)))
+
+(defn append
+  [records suspect]
+  (conj records suspect))
+
+(defn validate
+  [validate-funcs value]
+  (loop [[keyword keys] (keys validate-funcs)]
+    (if (nil? keyword)
+      true
+      (if ((keyword validate-funcs) (keyword value))
+        (recur keys)
+        false))))
