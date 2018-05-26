@@ -13,6 +13,18 @@ records
 
 (validate
   {:name string? :glitter-index integer?}
+  {:name "Ed", :glitter-index "10"})
+(validate
+  {:name string? :glitter-index integer?}
+  {:name "Ed", :glitter-indexes 10})
+(validate
+  {:name string? :glitter-index integer?}
+  {:name 90210, :glitter-index 10})
+(validate
+  {:name string? :glitter-index integer?}
+  {:names "Ed", :glitter-index 10})
+(validate
+  {:name string? :glitter-index integer?}
   {:name "Ed", :glitter-index 10})
 
 (let [keyword :name] (keyword {:name "Edward Cullen", :glitter-index 10}))

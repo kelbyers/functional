@@ -48,9 +48,9 @@
 
 (defn validate
   [validate-funcs value]
-  (loop [[keyword keys] (keys validate-funcs)]
+  (loop [[keyword & keywords] (keys validate-funcs)]
     (if (nil? keyword)
       true
       (if ((keyword validate-funcs) (keyword value))
-        (recur keys)
+        (recur keywords)
         false))))
