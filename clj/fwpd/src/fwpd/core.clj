@@ -54,3 +54,19 @@
       (if ((keyword validate-funcs) (keyword value))
         (recur keywords)
         false))))
+
+(defn record-to-csv
+  [record]
+  (clojure.string/join ","
+    (list (:name record) (:glitter-index record))))
+
+(defn suspects-to-csv
+  [suspects]
+  (let [suspect-csv-list
+        (loop [[record & suspects] suspects
+               suspect-csv-list '()]
+          (if (nil? record)
+            suspect-csv-list
+            (recur suspects
+                   (conj suspect-csv-list (record-to-csv record)))))]
+       (format "%s\n" (clojure.string/join "\n" suspect-csv-list))))
