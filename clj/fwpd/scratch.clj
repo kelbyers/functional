@@ -4,7 +4,7 @@
 
 (mapify (parse (slurp filename)))
 
-(append (mapify (parse (slurp filename))) "Bob Hoskins" "0")
+(append (mapify (parse (slurp filename))) (mapify [["Bob Hoskins" "0"]]))
 
 (mapify [["a" "1"]])
 
